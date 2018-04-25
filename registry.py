@@ -57,8 +57,7 @@ def natural_keys(text):
 # class to manipulate registry
 class Registry:
     # this is required for proper digest processing
-    HEADERS = {"Accept":
-                   "application/vnd.docker.distribution.manifest.v1+json"}
+    HEADERS = {"Accept": "application/vnd.docker.distribution.manifest.v1+json"}
 
     def __init__(self):
         self.username = None
@@ -158,7 +157,11 @@ class Registry:
             print 'would delete tag {0}'.format(tag[0])
             return False
 
+        self.HEADERS = {"Accept": "application/vnd.docker.distribution.manifest.v2+json"}
+
         tag_digest = self.get_tag_digest(image_name, tag[0])
+
+        self.HEADERS = {"Accept": "application/vnd.docker.distribution.manifest.v1+json"}
 
         if tag_digest in tag_digests_to_ignore:
             print "Digest {0} for tag {1} is referenced by another tag or has already been deleted and will be ignored".format(
